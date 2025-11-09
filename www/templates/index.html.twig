@@ -3,6 +3,14 @@
 {% block title %}Index{% endblock %}
 {% block content %}
 <h1>Liste des manuscrits de la bibliothèque du Patrimoine de Clermont Auvergne Métropole</h1>
+<form method="get" action="/app.php" style="margin-bottom:10px;">
+    <input type="text" name="search" placeholder="Rechercher (titre, auteur)" value="{{ search }}" size="40">
+    <button type="submit">Rechercher</button>
+    {% if search %}
+        <a href="/app.php">Effacer</a>
+    {% endif %}
+</form>
+<p><a href="/create.php">+ Ajouter un document</a></p>
 <table>
     <tr>
         <th>Référence</th>
@@ -12,11 +20,32 @@
     </tr>
     {% for document in list %}
     <tr>
-        <td>{{ document.name }}</td>
-        <td>{{ document.name }}</td>
-        <td>{{ document.name }}</td>
-        <td><a href="get.php?id=1">voir</a>&nbsp;/&nbsp;<a href="edit.php?id=1">éditer</a>&nbsp;/&nbsp;<a href="delete.php?id=1">supprimer</a></td>
+        <td>{{ document.objectid }}</td>
+        <td>{{ document.titre }}</td>
+        <td>{{ document.auteur }}</td>
+        <td><a href="/get.php?id={{ document._id }}">voir</a>&nbsp;/&nbsp;<a href="/edit.php?id={{ document._id }}">éditer</a>&nbsp;/&nbsp;<a href="/delete.php?id={{ document._id }}" onclick="return confirm('Supprimer ce document ?');">supprimer</a></td>
     </tr>
     {% endfor %}
 </table>
+
+<div style="margin-top:10px;">
+    <span>Page {{ page }}/{{ totalPages }} — {{ total }} éléments</span>
+    <div>
+        {% if hasPrev %}
+            <a href="/app.php?page=1{% if search %}&search={{ search }}{% endif %}">« Première</a>
+            <a href="/app.php?page={{ prevPage }}{% if search %}&search={{ search }}{% endif %}">‹ Précédente</a>
+        {% else %}
+            « Première
+            ‹ Précédente
+        {% endif %}
+        |
+        {% if hasNext %}
+            <a href="/app.php?page={{ nextPage }}{% if search %}&search={{ search }}{% endif %}">Suivante ›</a>
+            <a href="/app.php?page={{ totalPages }}{% if search %}&search={{ search }}{% endif %}">Dernière »</a>
+        {% else %}
+            Suivante ›
+            Dernière »
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

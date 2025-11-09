@@ -5,15 +5,20 @@ include_once '../init.php';
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use MongoDB\BSON\ObjectId;
 
 $twig = getTwig();
-$manager = getMongoDbManager();
 
-// @todo implementez la récupération des données d'une entité et la passer au template
-// petite aide : https://github.com/VSG24/mongodb-php-examples
-$entity = ['name' => 'test'];
+try {
+    if (!isset($_GET['id'])) {
+        throw new RuntimeException('Identifiant manquant');
+    }
+    $id = new ObjectId($_GET['id']);
+    $entity = getTpCollection()->findOne(['_id' => $id]);
+} catch (Throwable $e) {
+    echo $e->getMessage();
+}
 
-// render template
 try {
     echo $twig->render('get.html.twig', ['entity' => $entity]);
 } catch (LoaderError|RuntimeError|SyntaxError $e) {

@@ -1,4 +1,3 @@
-version: "3.3"
 services:
     tpmongo-mongodb:
         container_name: "tpmongo-mongodb"
@@ -35,7 +34,7 @@ services:
         depends_on:
             -   tpmongo-mongodb
         ports:
-           - 8080:80
+           - 8082:80
         volumes:
            - ./www:/var/www/app/
         networks:
@@ -86,7 +85,7 @@ services:
             - local
     tpmongo-k6:
         container_name: "tpmongo-k6"
-        image: loadimpact/k6:latest
+        image: grafana/k6:latest
         depends_on:
             - tpmongo-php
             - tpmongo-influxdb

@@ -2,18 +2,27 @@
 
 {% block title %}Modification d'un livre{% endblock %}
 {% block content %}
-<p>&larr;&nbsp;<a href="/index.php">Retourner à la liste</a></p>
+<p>&larr;&nbsp;<a href="/app.php">Retourner à la liste</a></p>
 <form action="/update.php" method="post">
         <input type="hidden" id="id" name="id" value="{{ entity._id }}">
 
         <label for="title">Titre :</label>
-        <input type="text" id="title" name="title" value="récupérez la valeur depuis mongodb" size="100">
+        <input type="text" id="title" name="title" value="{{ entity.titre }}" size="100">
 
         <label for="author">Auteur :</label>
-        <input type="text" id="author" name="author" size="50" value="récupérez la valeur depuis mongodb">
+        <input type="text" id="author" name="author" size="50" value="{{ entity.auteur }}">
 
         <label for="author">Siècle :</label>
-        <input type="number" id="century" name="century" value="123456879">
+        <input type="number" id="century" name="century" value="{{ entity.siecle }}">
+
+        <label for="cote">Cote :</label>
+        <input type="text" id="cote" name="cote" size="50" value="{{ entity.cote }}">
+
+        <label for="langue">Langue :</label>
+        <input type="text" id="langue" name="langue" size="50" value="{{ entity.langue }}">
+
+        <label for="edition">Édition :</label>
+        <input type="text" id="edition" name="edition" size="50" value="{{ entity.edition }}">
 
         <button type="submit">Enregistrer</button>
 </form>

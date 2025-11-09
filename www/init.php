@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 require_once __DIR__.'/vendor/autoload.php';
 
 use MongoDB\Database;
+use MongoDB\Collection;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -25,3 +26,12 @@ function getMongoDbManager(): Database
     return $client->selectDatabase($_ENV['MDB_DB']);
 }
 
+function getCollection(string $name): Collection
+{
+    return getMongoDbManager()->selectCollection($name);
+}
+
+function getTpCollection(): Collection
+{
+    return getCollection('tp');
+}
